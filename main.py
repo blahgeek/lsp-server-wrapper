@@ -16,6 +16,7 @@ async def main():
     wrapper = Wrapper(args.cmd)
     await wrapper.start()
     await wrapper.run()
+    await wrapper.terminate()
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)

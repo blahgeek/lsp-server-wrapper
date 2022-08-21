@@ -4,6 +4,7 @@
 import asyncio
 import logging
 import typing as tp
+import contextlib
 
 from .codec import read_message, write_message, Message
 from .async_stdio import create_async_stdio
@@ -92,5 +93,10 @@ class Wrapper:
             self._run_write(self._output_queue, self._stdout),
             self._run_read(self._proc_stdout, self._output_queue, self._input_queue, False),
             self._run_read(self._stdin, self._input_queue, self._output_queue, True),
-        ])
+        ], return_when=asyncio.FIRST_COMPLETED)
+
+    async def terminate(self):
+        with contextlib.suppress(ProcessLookupError):
+            self._proc.terminate()
+        await self._proc.communicate()
 
