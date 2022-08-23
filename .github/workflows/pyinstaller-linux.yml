@@ -1,0 +1,25 @@
+name: Package application with Pyinstaller for linux
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run Pyinstaller
+      uses: JackMcKew/pyinstaller-action-linux@0.1.4
+      with:
+        spec: main.spec
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: lsp-server-wrapper
+        path: dist/lsp-server-wrapper
