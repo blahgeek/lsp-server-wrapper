@@ -17,6 +17,7 @@ jobs:
     - name: Run Pyinstaller
       uses: JackMcKew/pyinstaller-action-linux@0.1.4
       with:
+        path: .
         spec: main.spec
 
     - uses: actions/upload-artifact@v3
