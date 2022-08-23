@@ -2,7 +2,8 @@ name: Pyinstaller for linux
 
 on:
   push:
-    branches: [ master ]
+    tags:
+      - "v*"
 
 jobs:
   build:
@@ -16,7 +17,7 @@ jobs:
     - uses: actions/checkout@v3
     - run: |
         pyinstaller main.spec
-    - uses: actions/upload-artifact@v3
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: lsp-server-wrapper
-        path: dist/lsp-server-wrapper
+        files: dist/lsp-server-wrapper
